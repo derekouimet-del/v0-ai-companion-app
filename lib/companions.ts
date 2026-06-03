@@ -23,7 +23,7 @@ export const companions: Companion[] = [
     name: "Destiny",
     agentId: "agent_5501kjw5jpx1ebptmremavw2vbhw",
     avatar: "/images/destiny-avatar.png",
-    description: "Warm and friendly, here to brighten your day",
+    description: "Unpredictable and spontaneous, you never know what mood she'll be in",
     accentColor: "from-purple-500 to-violet-500",
     glowColor: "purple",
   },
