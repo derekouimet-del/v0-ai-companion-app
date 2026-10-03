@@ -46,6 +46,14 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
       ringSpeaking: "ring-pink-500 shadow-pink-500/40",
       overlay: "bg-pink-500/10",
     },
+    green: {
+      outer: "bg-lime-500/10",
+      inner: "bg-emerald-500/15",
+      ring: "ring-lime-500/30 shadow-lime-500/20",
+      ringConnected: "ring-emerald-500/60",
+      ringSpeaking: "ring-lime-500 shadow-lime-500/40",
+      overlay: "bg-emerald-500/10",
+    },
   }
   
   const colors = glowClasses[glowColor as keyof typeof glowClasses] || glowClasses.orange

@@ -45,6 +45,15 @@ export const companions: Companion[] = [
     accentColor: "from-pink-500 to-rose-500",
     glowColor: "pink",
   },
+  {
+    id: "gran",
+    name: "Gran",
+    agentId: "REPLACE_WITH_GRAN_AGENT_ID",
+    avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grandma_oval-z43cR1m2te9pUqK6NAvkgeUdhjuuwE.png",
+    description: "Warm, wise, and always ready for a heartfelt conversation",
+    accentColor: "from-lime-400 to-emerald-500",
+    glowColor: "green",
+  },
 ]
 
 export function getCompanionById(id: string): Companion | undefined {
