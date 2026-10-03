@@ -12,6 +12,7 @@ interface CompanionAvatarProps {
 
 export function CompanionAvatar({ companion, isSpeaking, isConnected }: CompanionAvatarProps) {
   const glowColor = companion.glowColor
+  const isGran = companion.id === "gran"
   
   const glowClasses = {
     orange: {
@@ -76,6 +77,15 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
         )}
       />
       
+      {isGran && (
+        <>
+          <div className="absolute w-[19rem] h-[19rem] md:w-[24rem] md:h-[24rem] rounded-full border border-lime-400/20 animate-[spin_18s_linear_infinite]" aria-hidden="true" />
+          <div className="absolute w-[17rem] h-[17rem] md:w-[22rem] md:h-[22rem] rounded-full border border-dashed border-emerald-400/25 animate-[spin_24s_linear_infinite_reverse]" aria-hidden="true" />
+          <span className="absolute top-5 right-12 size-2 rounded-full bg-lime-300 shadow-[0_0_14px_4px_rgba(190,242,100,0.7)] animate-pulse" aria-hidden="true" />
+          <span className="absolute bottom-10 left-10 size-1.5 rounded-full bg-emerald-300 shadow-[0_0_12px_3px_rgba(110,231,183,0.7)] animate-pulse [animation-delay:700ms]" aria-hidden="true" />
+        </>
+      )}
+
       {/* Main avatar container */}
       <div 
         className={cn(
