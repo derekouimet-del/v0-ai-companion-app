@@ -105,6 +105,18 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
           priority
         />
         
+        {isGran && (
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute left-[22%] top-[34%] h-px w-[22%] bg-lime-200/70 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)]" />
+            <div className="absolute left-[22%] top-[34%] h-[12%] w-px bg-lime-200/60 shadow-[0_0_7px_2px_rgba(217,249,157,0.7)]" />
+            <div className="absolute right-[20%] top-[39%] h-px w-[20%] bg-emerald-200/70 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)]" />
+            <div className="absolute right-[20%] top-[39%] h-[10%] w-px bg-emerald-200/60 shadow-[0_0_7px_2px_rgba(167,243,208,0.7)]" />
+            <div className="absolute left-[35%] top-[48%] size-1.5 rounded-full bg-lime-100 shadow-[0_0_10px_3px_rgba(217,249,157,0.95)] animate-pulse" />
+            <div className="absolute right-[36%] top-[49%] size-1.5 rounded-full bg-emerald-100 shadow-[0_0_10px_3px_rgba(167,243,208,0.95)] animate-pulse [animation-delay:500ms]" />
+            <div className="absolute left-1/2 top-[25%] h-[42%] w-px -translate-x-1/2 bg-lime-100/30 shadow-[0_0_6px_1px_rgba(217,249,157,0.35)]" />
+          </div>
+        )}
+
         {/* Speaking indicator overlay */}
         {isSpeaking && (
           <div className={cn("absolute inset-0 animate-pulse", colors.overlay)} />
