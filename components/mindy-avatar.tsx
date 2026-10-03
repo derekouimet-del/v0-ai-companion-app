@@ -107,12 +107,12 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
         
         {isGran && (
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <span className="absolute left-[28%] top-[34%] size-1.5 rounded-full bg-lime-200 shadow-[0_0_10px_3px_rgba(217,249,157,0.9)] animate-pulse" />
-            <span className="absolute left-[34%] top-[31%] size-1 rounded-full bg-emerald-200 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:350ms]" />
-            <span className="absolute right-[29%] top-[36%] size-1.5 rounded-full bg-emerald-200 shadow-[0_0_10px_3px_rgba(167,243,208,0.9)] animate-pulse [animation-delay:600ms]" />
-            <span className="absolute right-[35%] top-[33%] size-1 rounded-full bg-lime-200 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:900ms]" />
-            <span className="absolute left-[30%] top-[42%] size-1 rounded-full bg-lime-100 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:700ms]" />
-            <span className="absolute right-[31%] top-[44%] size-1 rounded-full bg-emerald-100 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:1100ms]" />
+            <span className="absolute left-[36%] top-[40%] size-1.5 rounded-full bg-lime-200 shadow-[0_0_10px_3px_rgba(217,249,157,0.9)] animate-pulse" />
+            <span className="absolute left-[41%] top-[38%] size-1 rounded-full bg-emerald-200 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:350ms]" />
+            <span className="absolute right-[36%] top-[40%] size-1.5 rounded-full bg-emerald-200 shadow-[0_0_10px_3px_rgba(167,243,208,0.9)] animate-pulse [animation-delay:600ms]" />
+            <span className="absolute right-[41%] top-[38%] size-1 rounded-full bg-lime-200 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:900ms]" />
+            <span className="absolute left-[39%] top-[47%] size-1 rounded-full bg-lime-100 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:700ms]" />
+            <span className="absolute right-[39%] top-[47%] size-1 rounded-full bg-emerald-100 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:1100ms]" />
           </div>
         )}
 
