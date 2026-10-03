@@ -48,7 +48,7 @@ export const companions: Companion[] = [
   {
     id: "gran",
     name: "Gran",
-    agentId: "REPLACE_WITH_GRAN_AGENT_ID",
+    agentId: "I1VgUs2sFJoBYHwkPnMK",
     avatar: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grandma_oval-z43cR1m2te9pUqK6NAvkgeUdhjuuwE.png",
     description: "Warm, wise, and always ready for a heartfelt conversation",
     accentColor: "from-lime-400 to-emerald-500",
