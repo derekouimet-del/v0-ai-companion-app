@@ -12,6 +12,7 @@ interface CompanionAvatarProps {
 
 export function CompanionAvatar({ companion, isSpeaking, isConnected }: CompanionAvatarProps) {
   const glowColor = companion.glowColor
+  const isGran = companion.id === "gran"
   
   const glowClasses = {
     orange: {
@@ -46,6 +47,14 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
       ringSpeaking: "ring-pink-500 shadow-pink-500/40",
       overlay: "bg-pink-500/10",
     },
+    green: {
+      outer: "bg-lime-500/10",
+      inner: "bg-emerald-500/15",
+      ring: "ring-lime-500/30 shadow-lime-500/20",
+      ringConnected: "ring-emerald-500/60",
+      ringSpeaking: "ring-lime-500 shadow-lime-500/40",
+      overlay: "bg-emerald-500/10",
+    },
   }
   
   const colors = glowClasses[glowColor as keyof typeof glowClasses] || glowClasses.orange
@@ -68,6 +77,15 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
         )}
       />
       
+      {isGran && (
+        <>
+          <div className="absolute w-[19rem] h-[19rem] md:w-[24rem] md:h-[24rem] rounded-full border border-lime-400/20 animate-[spin_18s_linear_infinite]" aria-hidden="true" />
+          <div className="absolute w-[17rem] h-[17rem] md:w-[22rem] md:h-[22rem] rounded-full border border-dashed border-emerald-400/25 animate-[spin_24s_linear_infinite_reverse]" aria-hidden="true" />
+          <span className="absolute top-5 right-12 size-2 rounded-full bg-lime-300 shadow-[0_0_14px_4px_rgba(190,242,100,0.7)] animate-pulse" aria-hidden="true" />
+          <span className="absolute bottom-10 left-10 size-1.5 rounded-full bg-emerald-300 shadow-[0_0_12px_3px_rgba(110,231,183,0.7)] animate-pulse [animation-delay:700ms]" aria-hidden="true" />
+        </>
+      )}
+
       {/* Main avatar container */}
       <div 
         className={cn(
@@ -87,6 +105,13 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
           priority
         />
         
+        {isGran && (
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <span className="absolute right-[36%] top-[40%] size-1.5 rounded-full bg-emerald-200 shadow-[0_0_10px_3px_rgba(167,243,208,0.9)] animate-pulse" />
+            <span className="absolute left-1/2 top-[65%] h-10 w-px -translate-x-1/2 rounded-full bg-lime-200/90 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:450ms]" />
+          </div>
+        )}
+
         {/* Speaking indicator overlay */}
         {isSpeaking && (
           <div className={cn("absolute inset-0 animate-pulse", colors.overlay)} />

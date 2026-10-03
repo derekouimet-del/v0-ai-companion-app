@@ -21,9 +21,9 @@ export default function HomePage() {
       <header className="flex items-center justify-between p-4 md:p-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-            <span className="text-xl font-bold text-primary">M</span>
+            <span className="text-xl font-bold text-primary">{selectedCompanion.name.charAt(0)}</span>
           </div>
-          <h1 className="text-xl font-semibold text-foreground">Mindy</h1>
+          <h1 className="text-xl font-semibold text-foreground">{selectedCompanion.name}</h1>
         </div>
         <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
       </header>

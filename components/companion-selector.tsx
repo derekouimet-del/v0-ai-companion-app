@@ -31,7 +31,13 @@ export function CompanionSelector({ selectedId, onSelect }: CompanionSelectorPro
                 isSelected
                   ? companion.glowColor === "orange"
                     ? "ring-orange-500 shadow-lg shadow-orange-500/30"
-                    : "ring-purple-500 shadow-lg shadow-purple-500/30"
+                    : companion.glowColor === "purple"
+                      ? "ring-purple-500 shadow-lg shadow-purple-500/30"
+                      : companion.glowColor === "cyan"
+                        ? "ring-cyan-500 shadow-lg shadow-cyan-500/30"
+                        : companion.glowColor === "pink"
+                          ? "ring-pink-500 shadow-lg shadow-pink-500/30"
+                          : "ring-lime-500 shadow-lg shadow-lime-500/30"
                   : "ring-border group-hover:ring-muted-foreground"
               )}
             >
