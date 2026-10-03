@@ -107,13 +107,12 @@ export function CompanionAvatar({ companion, isSpeaking, isConnected }: Companio
         
         {isGran && (
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="absolute left-[22%] top-[34%] h-px w-[22%] bg-lime-200/70 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)]" />
-            <div className="absolute left-[22%] top-[34%] h-[12%] w-px bg-lime-200/60 shadow-[0_0_7px_2px_rgba(217,249,157,0.7)]" />
-            <div className="absolute right-[20%] top-[39%] h-px w-[20%] bg-emerald-200/70 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)]" />
-            <div className="absolute right-[20%] top-[39%] h-[10%] w-px bg-emerald-200/60 shadow-[0_0_7px_2px_rgba(167,243,208,0.7)]" />
-            <div className="absolute left-[35%] top-[48%] size-1.5 rounded-full bg-lime-100 shadow-[0_0_10px_3px_rgba(217,249,157,0.95)] animate-pulse" />
-            <div className="absolute right-[36%] top-[49%] size-1.5 rounded-full bg-emerald-100 shadow-[0_0_10px_3px_rgba(167,243,208,0.95)] animate-pulse [animation-delay:500ms]" />
-            <div className="absolute left-1/2 top-[25%] h-[42%] w-px -translate-x-1/2 bg-lime-100/30 shadow-[0_0_6px_1px_rgba(217,249,157,0.35)]" />
+            <span className="absolute left-[28%] top-[34%] size-1.5 rounded-full bg-lime-200 shadow-[0_0_10px_3px_rgba(217,249,157,0.9)] animate-pulse" />
+            <span className="absolute left-[34%] top-[31%] size-1 rounded-full bg-emerald-200 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:350ms]" />
+            <span className="absolute right-[29%] top-[36%] size-1.5 rounded-full bg-emerald-200 shadow-[0_0_10px_3px_rgba(167,243,208,0.9)] animate-pulse [animation-delay:600ms]" />
+            <span className="absolute right-[35%] top-[33%] size-1 rounded-full bg-lime-200 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:900ms]" />
+            <span className="absolute left-[30%] top-[42%] size-1 rounded-full bg-lime-100 shadow-[0_0_8px_2px_rgba(217,249,157,0.8)] animate-pulse [animation-delay:700ms]" />
+            <span className="absolute right-[31%] top-[44%] size-1 rounded-full bg-emerald-100 shadow-[0_0_8px_2px_rgba(167,243,208,0.8)] animate-pulse [animation-delay:1100ms]" />
           </div>
         )}
 
