@@ -40,7 +40,9 @@ export default function HomePage() {
       
       {/* Main content */}
       <div className="flex-1 flex items-center justify-center p-4 md:p-8">
-        {activeTab === "chat" && <ConversationInterface companion={selectedCompanion} />}
+        {activeTab === "chat" && (
+          <ConversationInterface key={selectedCompanion.id} companion={selectedCompanion} />
+        )}
         {activeTab === "tip" && <TipPanel />}
         {activeTab === "custom" && <CustomPanel />}
       </div>

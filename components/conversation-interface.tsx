@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useConversation } from "@elevenlabs/react"
 import { CompanionAvatar } from "./mindy-avatar"
 import { CallControls } from "./call-controls"
@@ -16,6 +16,7 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
   const [isConnecting, setIsConnecting] = useState(false)
 
   const conversation = useConversation({
+    micMuted: isMuted,
     onConnect: () => {
       setIsConnecting(false)
     },
@@ -29,25 +30,50 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
   })
 
   const startConversation = useCallback(async () => {
+    if (isConnecting || conversation.status === "connected" || conversation.status === "connecting") {
+      return
+    }
+
+    let permissionStream: MediaStream | undefined
+
     try {
       setIsConnecting(true)
-      
-      // Request microphone permission first
-      await navigator.mediaDevices.getUserMedia({ audio: true })
-      
-      // Start the session with websocket connection
+
+      // Ask for permission first so the browser exposes stable audio input IDs,
+      // then give ElevenLabs the current device instead of a stale saved ID.
+      permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const microphone = (await navigator.mediaDevices.enumerateDevices()).find(
+        (device) => device.kind === "audioinput" && device.deviceId,
+      )
+
+      permissionStream.getTracks().forEach((track) => track.stop())
+      permissionStream = undefined
+
+      if (!microphone) {
+        throw new Error("No microphone was found")
+      }
+
       await conversation.startSession({
         agentId: companion.agentId,
+        inputDeviceId: microphone.deviceId,
       })
     } catch (error) {
+      permissionStream?.getTracks().forEach((track) => track.stop())
       console.error("Failed to start conversation:", error)
       setIsConnecting(false)
       alert("Could not start conversation. Please make sure you've allowed microphone access.")
     }
-  }, [companion.agentId, conversation])
+  }, [companion.agentId, conversation, isConnecting])
 
   const endConversation = useCallback(async () => {
     await conversation.endSession()
+    setIsConnecting(false)
+  }, [conversation])
+
+  useEffect(() => {
+    return () => {
+      void conversation.endSession()
+    }
   }, [conversation])
 
   const handleToggleMute = useCallback(() => {
