@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useConversation } from "@elevenlabs/react"
 import { CompanionAvatar } from "./mindy-avatar"
 import { CallControls } from "./call-controls"
@@ -56,6 +56,13 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
 
   const endConversation = useCallback(async () => {
     await conversation.endSession()
+    setIsConnecting(false)
+  }, [conversation])
+
+  useEffect(() => {
+    return () => {
+      void conversation.endSession()
+    }
   }, [conversation])
 
   const handleToggleMute = useCallback(() => {
