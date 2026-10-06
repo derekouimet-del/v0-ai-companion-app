@@ -34,20 +34,16 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
       return
     }
 
-    let permissionStream: MediaStream | undefined
-
     try {
       setIsConnecting(true)
 
-      // Confirm microphone access without leaving a second live audio stream behind.
-      permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      permissionStream.getTracks().forEach((track) => track.stop())
-
+      // ElevenLabs requests and owns the microphone stream for the session.
+      // Do not preflight with getUserMedia: stopping that stream before the
+      // SDK starts can leave browsers with a denied or unavailable track.
       await conversation.startSession({
         agentId: companion.agentId,
       })
     } catch (error) {
-      permissionStream?.getTracks().forEach((track) => track.stop())
       console.error("Failed to start conversation:", error)
       setIsConnecting(false)
       alert("Could not start conversation. Please make sure you've allowed microphone access.")
