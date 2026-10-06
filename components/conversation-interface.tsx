@@ -16,6 +16,7 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
   const [isConnecting, setIsConnecting] = useState(false)
 
   const conversation = useConversation({
+    micMuted: isMuted,
     onConnect: () => {
       setIsConnecting(false)
     },
@@ -29,22 +30,29 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
   })
 
   const startConversation = useCallback(async () => {
+    if (isConnecting || conversation.status === "connected" || conversation.status === "connecting") {
+      return
+    }
+
+    let permissionStream: MediaStream | undefined
+
     try {
       setIsConnecting(true)
-      
-      // Request microphone permission first
-      await navigator.mediaDevices.getUserMedia({ audio: true })
-      
-      // Start the session with websocket connection
+
+      // Confirm microphone access without leaving a second live audio stream behind.
+      permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      permissionStream.getTracks().forEach((track) => track.stop())
+
       await conversation.startSession({
         agentId: companion.agentId,
       })
     } catch (error) {
+      permissionStream?.getTracks().forEach((track) => track.stop())
       console.error("Failed to start conversation:", error)
       setIsConnecting(false)
       alert("Could not start conversation. Please make sure you've allowed microphone access.")
     }
-  }, [companion.agentId, conversation])
+  }, [companion.agentId, conversation, isConnecting])
 
   const endConversation = useCallback(async () => {
     await conversation.endSession()
