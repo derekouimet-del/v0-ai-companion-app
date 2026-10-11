@@ -39,29 +39,27 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
     try {
       setIsConnecting(true)
 
-      // Ask for permission first so the browser exposes stable audio input IDs,
-      // then give ElevenLabs the current device instead of a stale saved ID.
-      permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const microphone = (await navigator.mediaDevices.enumerateDevices()).find(
-        (device) => device.kind === "audioinput" && device.deviceId,
-      )
+      if (!navigator.mediaDevices?.getUserMedia) {
+        throw new Error("Microphone access is unavailable in this browser")
+      }
 
+      // ElevenLabs requires microphone permission before its WebRTC session starts.
+      permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
       permissionStream.getTracks().forEach((track) => track.stop())
       permissionStream = undefined
 
-      if (!microphone) {
-        throw new Error("No microphone was found")
-      }
-
+      // The SDK selects the browser's active input device. Passing a device ID to
+      // startSession is not supported by this SDK version and prevents the agent
+      // session from connecting after permission is granted.
       await conversation.startSession({
         agentId: companion.agentId,
-        inputDeviceId: microphone.deviceId,
+        connectionType: "webrtc",
       })
     } catch (error) {
       permissionStream?.getTracks().forEach((track) => track.stop())
       console.error("Failed to start conversation:", error)
       setIsConnecting(false)
-      alert("Could not start conversation. Please make sure you've allowed microphone access.")
+      alert("Could not start conversation. Please allow microphone access and try again.")
     }
   }, [companion.agentId, conversation, isConnecting])
 
