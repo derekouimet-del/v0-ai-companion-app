@@ -41,23 +41,15 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
         throw new Error("Microphone access is unavailable in this browser")
       }
 
-      // Request permission first, then give ElevenLabs the concrete input
-      // device. Some browsers do not expose a usable `default` device to the
-      // SDK until permission has been granted, which surfaces as
-      // "Requested device not found" before the agent connection starts.
+      // Ask for permission before connecting. Do not pass an enumerated device
+      // id: browsers can return an empty or stale device id even after access
+      // is granted, which makes the SDK fail with "Requested device not found".
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const audioInput = navigator.mediaDevices
-        .enumerateDevices
-        ? (await navigator.mediaDevices.enumerateDevices()).find(
-            (device) => device.kind === "audioinput" && device.deviceId,
-          )
-        : undefined
       stream.getTracks().forEach((track) => track.stop())
 
       await conversation.startSession({
         agentId: companion.agentId,
         connectionType: "websocket",
-        ...(audioInput?.deviceId ? { inputDeviceId: audioInput.deviceId } : {}),
       })
     } catch (error) {
       console.error("Failed to start conversation:", {
