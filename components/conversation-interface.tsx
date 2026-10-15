@@ -41,19 +41,37 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
         throw new Error("Microphone access is unavailable in this browser")
       }
 
-      // startSession requests microphone permission and then hands the active
-      // browser device directly to ElevenLabs. A separate getUserMedia call
-      // can leave WebRTC with a stale device reference and cause NotFoundError.
-      // WebSocket transport uses the browser's normal microphone path and
-      // avoids WebRTC device selection failures in Safari and embedded previews.
+      // Request permission first, then give ElevenLabs the concrete input
+      // device. Some browsers do not expose a usable `default` device to the
+      // SDK until permission has been granted, which surfaces as
+      // "Requested device not found" before the agent connection starts.
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const audioInput = navigator.mediaDevices
+        .enumerateDevices
+        ? (await navigator.mediaDevices.enumerateDevices()).find(
+            (device) => device.kind === "audioinput" && device.deviceId,
+          )
+        : undefined
+      stream.getTracks().forEach((track) => track.stop())
+
       await conversation.startSession({
         agentId: companion.agentId,
         connectionType: "websocket",
+        ...(audioInput?.deviceId ? { inputDeviceId: audioInput.deviceId } : {}),
       })
     } catch (error) {
-      console.error("Failed to start conversation:", error)
+      console.error("Failed to start conversation:", {
+        companion: companion.id,
+        agentId: companion.agentId,
+        error,
+      })
       setIsConnecting(false)
-      alert("Could not start conversation. Please allow microphone access and try again.")
+      const message = error instanceof DOMException && error.name === "NotAllowedError"
+        ? "Microphone access was blocked. Please allow microphone access and try again."
+        : error instanceof DOMException && error.name === "NotFoundError"
+          ? "No microphone was found. Connect a microphone and try again."
+          : "Could not start conversation. Please try again."
+      alert(message)
     }
   }, [companion.agentId, conversation, isConnecting])
 
