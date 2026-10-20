@@ -102,9 +102,10 @@ function ConversationStage({
       const permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
       permissionStream.getTracks().forEach((track) => track.stop())
 
-      conversation.startSession({
+      await conversation.startSession({
         agentId: companion.agentId,
       })
+      await conversation.setVolume({ volume: 1 })
     } catch (error) {
       console.error("Failed to start conversation:", { companion: companion.id, agentId: companion.agentId, error })
       setIsConnecting(false)
