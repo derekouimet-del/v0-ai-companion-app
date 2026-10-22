@@ -5,7 +5,7 @@ import { useConversation, ConversationProvider } from "@elevenlabs/react"
 import { CompanionAvatar } from "./mindy-avatar"
 import { CallControls } from "./call-controls"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle, Monitor } from "lucide-react"
+import { AlertCircle, CheckCircle2, Loader2, Monitor, WifiOff } from "lucide-react"
 import type { Companion } from "@/lib/companions"
 
 interface ConversationInterfaceProps {
@@ -146,8 +146,25 @@ function ConversationStage({
         isConnected={isConnected}
       />
 
-      <div className="text-center">
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 text-balance">
+      <div className="flex flex-col items-center gap-3 text-center">
+        <div
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border/70 bg-background/60 px-4 py-2 text-sm text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          {isConnecting ? (
+            <Loader2 className="size-4 animate-spin text-primary" aria-hidden="true" />
+          ) : isConnected ? (
+            <CheckCircle2 className="size-4 text-primary" aria-hidden="true" />
+          ) : (
+            <WifiOff className="size-4" aria-hidden="true" />
+          )}
+          <span>
+            {isConnecting ? "Connecting" : isConnected ? "Connected" : "Disconnected"}
+          </span>
+        </div>
+
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground text-balance">
           {isConnected
             ? `Connected with ${companion.name}`
             : `Ready to chat with ${companion.name}?`}
