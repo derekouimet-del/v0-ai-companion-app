@@ -102,7 +102,7 @@ function ConversationStage({
       const permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
       permissionStream.getTracks().forEach((track) => track.stop())
 
-      conversation.startSession({
+      await conversation.startSession({
         agentId: companion.agentId,
       })
     } catch (error) {
