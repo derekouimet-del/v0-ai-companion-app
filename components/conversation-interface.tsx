@@ -198,7 +198,17 @@ export function ConversationInterface({ companion }: ConversationInterfaceProps)
         <Alert className="border-amber-500/40 bg-amber-500/10">
           <Monitor className="h-4 w-4" />
           <AlertDescription className="text-amber-200/90">
-            You are viewing this app inside a preview frame. Browsers block the microphone in embedded previews, so {companion.name} cannot hear you here. Open the standalone site directly to talk.
+            <span className="block">
+              You are viewing this app inside a preview frame. Browsers block microphone access here, so {companion.name} cannot hear you in this frame.
+            </span>
+            <a
+              className="mt-2 inline-block font-semibold text-amber-100 underline underline-offset-4 hover:text-white"
+              href={typeof window !== "undefined" ? window.location.href : "#"}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open the standalone site to talk
+            </a>
           </AlertDescription>
         </Alert>
       )}
