@@ -92,17 +92,7 @@ function ConversationStage({
     setIsConnecting(true)
 
     try {
-      if (typeof window !== "undefined" && !window.isSecureContext) {
-        throw new DOMException("Microphone access requires HTTPS", "NotSupportedError")
-      }
-      if (!navigator.mediaDevices?.getUserMedia) {
-        throw new DOMException("Microphone API unavailable in this browser", "NotSupportedError")
-      }
-
-      const permissionStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      permissionStream.getTracks().forEach((track) => track.stop())
-
-      conversation.startSession({
+      await conversation.startSession({
         agentId: companion.agentId,
       })
     } catch (error) {
