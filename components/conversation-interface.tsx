@@ -94,6 +94,14 @@ function ConversationStage({
     setIsConnecting(true)
 
     try {
+      const microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      microphoneStream.getTracks().forEach((track) => track.stop())
+
+      console.log("[v0] Microphone permission granted", {
+        companion: companion.id,
+        agentId: companion.agentId,
+      })
+
       await conversation.startSession({
         agentId: companion.agentId,
       })
