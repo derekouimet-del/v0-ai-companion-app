@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useConversation, ConversationProvider } from "@elevenlabs/react"
 import { CompanionAvatar } from "./mindy-avatar"
 import { CallControls } from "./call-controls"
@@ -82,6 +82,8 @@ function ConversationStage({
       console.error("Conversation error:", error)
     },
   })
+  const conversationRef = useRef(conversation)
+  conversationRef.current = conversation
 
   const startConversation = useCallback(async () => {
     if (isConnecting || conversation.status !== "disconnected") {
@@ -109,9 +111,9 @@ function ConversationStage({
 
   useEffect(() => {
     return () => {
-      conversation.endSession()
+      conversationRef.current.endSession()
     }
-  }, [conversation])
+  }, [])
 
   const handleToggleMute = useCallback(() => {
     setIsMuted((prev) => !prev)
