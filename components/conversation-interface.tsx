@@ -75,7 +75,16 @@ function ConversationStage({
   const conversation = useConversation({
     micMuted: isMuted,
     onConnect: () => setIsConnecting(false),
-    onDisconnect: () => setIsConnecting(false),
+    onDisconnect: (details) => {
+      setIsConnecting(false)
+      console.warn("Conversation disconnected:", details)
+      if (details?.reason === "error") {
+        setNotice({
+          title: "Connection to the companion dropped",
+          body: `${companion.name}'s session closed unexpectedly${details.message ? `: ${details.message}` : ""}${details.closeCode ? ` (code ${details.closeCode})` : ""}. Check the browser console for details, then try again.`,
+        })
+      }
+    },
     onError: (error) => {
       setIsConnecting(false)
       setNotice(describeError(error, companion))
@@ -94,14 +103,8 @@ function ConversationStage({
     setIsConnecting(true)
 
     try {
-      const microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      microphoneStream.getTracks().forEach((track) => track.stop())
-
-      console.log("[v0] Microphone permission granted", {
-        companion: companion.id,
-        agentId: companion.agentId,
-      })
-
+      // Let ElevenLabs request and own the microphone. Stopping a separate
+      // getUserMedia stream before startSession can leave WebRTC with a stale device.
       await conversation.startSession({
         agentId: companion.agentId,
       })
