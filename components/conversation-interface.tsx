@@ -86,7 +86,11 @@ function ConversationStage({
   conversationRef.current = conversation
 
   const startConversation = useCallback(async () => {
-    if (isConnecting || conversation.status !== "disconnected") {
+    if (
+      isConnecting ||
+      conversation.status === "connected" ||
+      conversation.status === "connecting"
+    ) {
       return
     }
 
